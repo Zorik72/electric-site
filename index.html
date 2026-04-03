@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Electrician Services</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111, #333);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      background: #ff9900;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e68a00;
+    }
+
+    .success {
+      display: none;
+      color: green;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .service-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      color: white;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>⚡ Electrician Services</h1>
+  <p>Fast • Reliable • Affordable</p>
+</header>
+
+<div class="section">
+  <div class="services">
+    <div class="service-box">🔌 Outlet Installation</div>
+    <div class="service-box">💡 Lighting Repair</div>
+    <div class="service-box">⚡ Panel Upgrade</div>
+    <div class="service-box">🛠 Troubleshooting</div>
+    <div class="service-box">🚗 EV Charger Installation</div>
+<div class="service-box">🌀 Fan Installation & Replacement</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <h2>Free Estimate</h2>
+
+    <form id="estimateForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="email" name="email" placeholder="Email" required>
+
+      <textarea name="message" placeholder="Describe your problem..." required></textarea>
+
+      <button type="submit">Send Request</button>
+    </form>
+
+    <div class="success" id="successMsg">
+      ✅ Request sent! I will contact you soon.
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 Electrician Services
+</footer>
+
+<script>
+document.getElementById("estimateForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  const data = {
+    name: formData.get("name"),
+    phone: formData.get("phone"),
+    email: formData.get("email"),
+    message: formData.get("message")
+  };
+
+  try {
+    const res = await fetch("/.netlify/functions/send-estimate", {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      document.getElementById("successMsg").style.display = "block";
+      this.reset();
+    } else {
+      alert("Error sending request");
+    }
+
+  } catch (err) {
+    alert("Network error");
+  }
+
+
+});
+</script>
+
+</body>
+</html>
